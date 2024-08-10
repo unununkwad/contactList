@@ -34,10 +34,8 @@ import Icon from "@mui/material/Icon";
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
-import VuiInput from "components/VuiInput";
 
 // Vision UI Dashboard React example components
-import Breadcrumbs from "examples/Breadcrumbs";
 import NotificationItem from "examples/Items/NotificationItem";
 
 // Custom styles for DashboardNavbar
@@ -146,27 +144,12 @@ function DashboardNavbar({ absolute, light, isMini }) {
     >
       <Toolbar sx={(theme) => navbarContainer(theme)}>
         <VuiBox color="inherit" mb={{ xs: 1, md: 0 }} sx={(theme) => navbarRow(theme, { isMini })}>
-          <Breadcrumbs icon="home" title={route[route.length - 1]} route={route} light={light} />
+          {/* <Breadcrumbs icon="home" title={route[route.length - 1]} route={route} light={light} /> */}
         </VuiBox>
         {isMini ? null : (
           <VuiBox sx={(theme) => navbarRow(theme, { isMini })}>
-            <VuiBox pr={1}>
-              <VuiInput
-                placeholder="Type here..."
-                icon={{ component: "search", direction: "left" }}
-                sx={({ breakpoints }) => ({
-                  [breakpoints.down("sm")]: {
-                    maxWidth: "80px",
-                  },
-                  [breakpoints.only("sm")]: {
-                    maxWidth: "80px",
-                  },
-                  backgroundColor: "info.main !important",
-                })}
-              />
-            </VuiBox>
             <VuiBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in">
+              {localStorage.getItem("token") !== null && localStorage.getItem("userName") !== null ?
                 <IconButton sx={navbarIconButton} size="small">
                   <Icon
                     sx={({ palette: { dark, white } }) => ({
@@ -180,10 +163,29 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     fontWeight="medium"
                     color={light ? "white" : "dark"}
                   >
-                    Sign in
+                    {localStorage.getItem("userName")}
                   </VuiTypography>
                 </IconButton>
-              </Link>
+              :
+                <Link to="/login">
+                  <IconButton sx={navbarIconButton} size="small">
+                    <Icon
+                      sx={({ palette: { dark, white } }) => ({
+                        color: light ? white.main : dark.main,
+                      })}
+                    >
+                      account_circle
+                    </Icon>
+                    <VuiTypography
+                      variant="button"
+                      fontWeight="medium"
+                      color={light ? "white" : "dark"}
+                    >
+                      Zaloguj
+                    </VuiTypography>
+                  </IconButton>
+                </Link>
+              }
               <IconButton
                 size="small"
                 color="inherit"
@@ -191,25 +193,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 onClick={handleMiniSidenav}
               >
                 <Icon className={"text-white"}>{miniSidenav ? "menu_open" : "menu"}</Icon>
-              </IconButton>
-              <IconButton
-                size="small"
-                color="inherit"
-                sx={navbarIconButton}
-                onClick={handleConfiguratorOpen}
-              >
-                <Icon>settings</Icon>
-              </IconButton>
-              <IconButton
-                size="small"
-                color="inherit"
-                sx={navbarIconButton}
-                aria-controls="notification-menu"
-                aria-haspopup="true"
-                variant="contained"
-                onClick={handleOpenMenu}
-              >
-                <Icon className={light ? "text-white" : "text-dark"}>notifications</Icon>
               </IconButton>
               {renderMenu()}
             </VuiBox>
