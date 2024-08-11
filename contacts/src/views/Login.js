@@ -119,9 +119,6 @@ function Login() {
             <VuiInput
               type="password"
               placeholder="Wprowadź hasło..."
-              sx={({ typography: { size } }) => ({
-                fontSize: size.sm,
-              })}
               onChange={(data) => setPassword(data.target.value)}
               onKeyPress={(e) => e.charCode === 13 && login()}
             />

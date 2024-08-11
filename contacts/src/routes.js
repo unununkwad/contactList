@@ -7,6 +7,7 @@ import Logout from "views/Logout";
 import { IoIosLogIn, IoIosLogOut } from "react-icons/io";
 import { BsFillPersonFill } from "react-icons/bs";
 
+  // menu
   const routes = [
     {
       type: "collapse",
